@@ -1,0 +1,17 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'YourAzureSubscription'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az ml model deploy --name model-deployment --model model:1 --workspace-name ml-workspace --resource-group ml-resource-group --aks-name ml-aks-cluster
+  displayName: 'Deploy Model to AKS'
